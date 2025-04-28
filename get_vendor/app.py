@@ -28,6 +28,16 @@ def lambda_handler(event, context):
 
     logger.info(f"Fetching vendor and incentive data for vendor_id: {vendor_id}")
 
+    # Check if the HTTP method is OPTIONS (preflight request)
+    if event['httpMethod'] == 'OPTIONS':
+        return {
+            'statusCode': 200,
+            'headers': {
+                "Access-Control-Allow-Origin": "http://localhost:8000",
+                'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+            }
+        }
+
     try:
         # Get vendor and incentive from DynamoDB
         vendor = vendors_table.get_item(Key={'vendor_id': vendor_id}).get('Item')
