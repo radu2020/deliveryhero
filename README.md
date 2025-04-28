@@ -191,4 +191,4 @@ This endpoint allows users to create a new vendor and its associated incentive d
 
         ![UI Screenshot](docs/images/ui.jpg)
 
-# Thank you for your time and attention! 🙂
+# Thank you for your time and attention!
