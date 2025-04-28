@@ -100,6 +100,14 @@ Resources:
             Path: /vendor
             Method: post
             RestApiId: !Ref Api
+        Options:
+          Type: Api
+          Properties:
+            Path: /vendor
+            Method: options
+            RestApiId: !Ref Api
+            Auth:
+              ApiKeyRequired: false
 
   SeederFunction:
     Type: AWS::Serverless::Function
