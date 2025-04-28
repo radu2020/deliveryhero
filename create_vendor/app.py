@@ -21,8 +21,19 @@ def lambda_handler(event, context):
         # Log incoming event for tracking
         logger.info("Received event", extra={"event": event})
 
+        # Check if the HTTP method is OPTIONS (preflight request)
+        if event['httpMethod'] == 'OPTIONS':
+            return {
+                'statusCode': 200,
+                'headers': {
+                    "Access-Control-Allow-Origin": "http://localhost:8000",
+                    'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+                }
+            }
+
         # Parse the request body
         body = json.loads(event['body'])
+        
         vendor_id = str(uuid.uuid4())
 
         # Log generated vendor ID for tracking
@@ -59,6 +70,10 @@ def lambda_handler(event, context):
         return {
             'statusCode': 201,
             'body': json.dumps({'vendor_id': vendor_id}),
+            'headers': {
+                "Access-Control-Allow-Origin": "http://localhost:8000",
+                "Access-Control-Allow-Headers": "Content-Type, x-api-key"
+            },
         }
 
     except KeyError as e:
