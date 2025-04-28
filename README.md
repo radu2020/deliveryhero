@@ -34,7 +34,7 @@ brew install python@3.13
    sam deploy
    ```
 
-After deploy, SAM will output the API endpoint, which is needed to make requests. The script will deploy all the Lambdas, API Gateway and DynamoDB.
+The script will deploy all the Lambdas, API Gateway and DynamoDB. After deployment, SAM will output the API endpoint, which is needed to make requests. 
 
 ## Checking Stack Status
 
@@ -45,7 +45,7 @@ aws cloudformation describe-stacks --stack-name <STACK_NAME>
 
 ## Invoking the Seeder Function
 
-To invoke the Seeder Lambda which inserts dummy data into both Vendors and Incentives tables run command below:
+To invoke the Seeder Lambda which inserts dummy data into both Vendors and Incentives tables please run the command below (output is logged to a file):
 
 ```bash
 aws lambda invoke --function-name VendorSeederFunction output.txt
@@ -53,13 +53,13 @@ aws lambda invoke --function-name VendorSeederFunction output.txt
 
 ## Deleting a Stack via AWS CLI
 
+If no longer needed, the stack can be removed easily via the CLI:
+
 ```bash
 aws cloudformation delete-stack --stack-name <your-stack-name>
 ```
 
-
 # API Endpoint Documentation
-
 
 ## Endpoint: `GET /vendor/{vendor_id}`
 
@@ -99,8 +99,6 @@ GET /vendor/12345
   "discount_expiry_date": "2025-12-31"
 }
 ```
-
-- The response will return the combined vendor and incentive data. If no incentive data exists for the vendor, the incentive fields will be omitted.
 
 ## Endpoint: `POST /vendor`
 
