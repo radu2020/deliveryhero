@@ -9,14 +9,21 @@
 
 ### AWS CLI
 
+AWS CLI is a tool that lets you manage AWS services and resources directly from the terminal, making it easy to automate tasks, deploy applications, and control cloud infrastructure quickly and efficiently.
+
 Check how to install and configure the AWS CLI [here](./docs/AWS_CLI.md).
 
 ### AWS SAM CLI
 
+AWS SAM CLI is a command-line tool that helps to build, test, and deploy serverless applications quickly on AWS.
+
 Check how to install and configure the AWS SAM CLI [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html#install-sam-cli-instructions).
 
 ### Python
-To install Python 3.13 on macOS:
+
+Installing Python locally allows to develop, test, and package code properly before deploying, ensuring compatibility with the Lambda runtime and speeding up development.
+
+To install Python 3.13 on macOS, use following command:
 
 ```bash
 brew install python@3.13
@@ -34,7 +41,14 @@ brew install python@3.13
    sam deploy
    ```
 
-The script will deploy all the Lambdas, API Gateway and DynamoDB. After deployment, SAM will output the API endpoint, which is needed to make requests. 
+    The script will deploy all the Lambdas, API Gateway and DynamoDB. After deployment, SAM will output the API endpoint, which is needed to make requests.
+
+3. **(Optional) Live Sync with AWS SAM**:
+    To enable live sync of the application code with the cloud stack during development, use the following command:
+    ```bash
+    sam sync --stack-name <STACK_NAME> --watch
+    ```
+    This allows to rapidly test changes without needing to redeploy the entire stack manually.
 
 ## Checking Stack Status
 
@@ -176,18 +190,18 @@ This endpoint allows users to create a new vendor and its associated incentive d
     -H "x-api-key: YOUR_API_KEY"
     ```
 
-3. **(Optional) View Vendor Data Using the UI:**
+3. **(Optional) Create & View Vendor Data Using the UI:**
 
     1. **Start the Server**  
-    In your terminal, navigate to the `client` directory and run the following command to start the server:
+    In your terminal, navigate to the `ui` directory and run the following command to start the server:
         ```bash
-        cd client
+        cd ui
         python3 -m http.server 8000
         ```
 
     2. **Access the UI**  
     Open your browser and navigate to http://localhost:8000.  
-    Enter the **API Key**, **API URL**, and **Vendor ID**, then click **Get Vendor Data** to retrieve the vendor details.
+    Enter the **API Key**, **API URL**, and **Vendor ID**, then click **Get Vendor Data** to retrieve the vendor details (**Post Vendor Data** is also supported).
 
         ![UI Screenshot](docs/images/ui.jpg)
 
