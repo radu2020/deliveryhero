@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Data API Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Vendor Data API</h1>
+        <div class="form-group">
+            <label for="apiKey">API Key</label>
+            <input type="text" id="apiKey" placeholder="Enter API Key">
+        </div>
+        <div class="form-group">
+            <label for="apiUrl">API URL</label>
+            <input type="url" id="apiUrl" placeholder="Enter API URL (e.g., https://api.example.com)">
+        </div>
+        <div class="form-group">
+            <label for="vendorId">Vendor ID</label>
+            <input type="text" id="vendorId" placeholder="Enter Vendor ID">
+        </div>
+        <button onclick="fetchVendorData()">Get Vendor Data</button>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        async function fetchVendorData() {
+            const apiKey = document.getElementById('apiKey').value;
+            const apiUrl = document.getElementById('apiUrl').value;
+            const vendorId = document.getElementById('vendorId').value;
+
+            // Validate inputs
+            if (!apiKey || !apiUrl || !vendorId) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const url = `${apiUrl}/vendor/${vendorId}`;
+            const headers = {
+                "x-api-key": `${apiKey}`,
+            };
+
+            try {
+                // Make the API request
+                const response = await fetch(url, { method: 'GET', headers: headers});
+
+                // Check if the response is not OK (error handling)
+                if (!response.ok) {
+                    throw new Error(`API request failed: ${response.statusText}`);
+                }
+
+                // Parse and display the JSON response
+                const data = await response.json();
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('response').textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+
+</body>
+</html>

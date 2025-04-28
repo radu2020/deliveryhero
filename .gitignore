@@ -172,3 +172,12 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# output files
+output.txt
+
+# .DS_Store
+.DS_Store
+
+# AWS SAM files
+.aws-sam/
