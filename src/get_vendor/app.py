@@ -9,9 +9,10 @@ metrics = Metrics()
 tracer = Tracer()
 
 # Initialize DynamoDB client
-dynamodb = boto3.resource('dynamodb')
-vendors_table = dynamodb.Table('Vendors')
-incentives_table = dynamodb.Table('Incentives')
+dynamodb = boto3.resource("dynamodb")
+vendors_table = dynamodb.Table("Vendors")
+incentives_table = dynamodb.Table("Incentives")
+
 
 # Custom JSON Encoder to handle Decimal types
 class DecimalEncoder(json.JSONEncoder):
@@ -20,34 +21,35 @@ class DecimalEncoder(json.JSONEncoder):
             return float(obj)
         return super().default(obj)
 
+
 # Lambda handler with tracing and logging
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context  # Automatically adds Lambda context to logs
-def lambda_handler(event, context):    
-    vendor_id = event['pathParameters']['vendor_id']
+def lambda_handler(event, context):
+    vendor_id = event["pathParameters"]["vendor_id"]
     logger.info(f"Fetching vendor and incentive data for vendor_id: {vendor_id}")
 
     # Check if the HTTP method is OPTIONS (preflight request)
-    if event['httpMethod'] == 'OPTIONS':
+    if event["httpMethod"] == "OPTIONS":
         return {
-            'statusCode': 200,
-            'headers': {
+            "statusCode": 200,
+            "headers": {
                 "Access-Control-Allow-Origin": "http://localhost:8000",
-                'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
-            }
+                "Access-Control-Allow-Headers": "Content-Type, x-api-key",
+            },
         }
 
     try:
         # Get vendor and incentive from DynamoDB
-        vendor = vendors_table.get_item(Key={'vendor_id': vendor_id}).get('Item')
-        incentive = incentives_table.get_item(Key={'vendor_id': vendor_id}).get('Item')
-        
+        vendor = vendors_table.get_item(Key={"vendor_id": vendor_id}).get("Item")
+        incentive = incentives_table.get_item(Key={"vendor_id": vendor_id}).get("Item")
+
         # If vendor not found, return 404
         if not vendor:
             logger.error(f"Vendor with vendor_id {vendor_id} not found")
             return {
-                'statusCode': 404,
-                'body': json.dumps({'error': 'Vendor not found'}),
+                "statusCode": 404,
+                "body": json.dumps({"error": "Vendor not found"}),
             }
 
         # Merge the vendor and incentive data
@@ -61,20 +63,19 @@ def lambda_handler(event, context):
 
         # Return the result, converting Decimal to float using custom encoder
         return {
-            'statusCode': 200,
-            'body': json.dumps(result, cls=DecimalEncoder),
-            'headers': {
+            "statusCode": 200,
+            "body": json.dumps(result, cls=DecimalEncoder),
+            "headers": {
                 "Access-Control-Allow-Origin": "http://localhost:8000",
-                "Access-Control-Allow-Headers": "Content-Type, x-api-key"
+                "Access-Control-Allow-Headers": "Content-Type, x-api-key",
             },
         }
 
-    
     except Exception as e:
         logger.error(f"Error occurred: {str(e)}", exc_info=True)
         metrics.add_metric(name="VendorFetchFailed", unit="Count", value=1)
 
         return {
-            'statusCode': 500,
-            'body': json.dumps({'error': 'Internal Server Error', 'message': str(e)}),
+            "statusCode": 500,
+            "body": json.dumps({"error": "Internal Server Error", "message": str(e)}),
         }

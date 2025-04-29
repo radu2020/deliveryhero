@@ -9,9 +9,10 @@ metrics = Metrics()
 tracer = Tracer()
 
 # Set up DynamoDB resources
-dynamodb = boto3.resource('dynamodb')
-vendors_table = dynamodb.Table('Vendors')
-incentives_table = dynamodb.Table('Incentives')
+dynamodb = boto3.resource("dynamodb")
+vendors_table = dynamodb.Table("Vendors")
+incentives_table = dynamodb.Table("Incentives")
+
 
 # Lambda handler with tracing and logging
 @tracer.capture_lambda_handler
@@ -22,18 +23,18 @@ def lambda_handler(event, context):
         logger.info("Received event", extra={"event": event})
 
         # Check if the HTTP method is OPTIONS (preflight request)
-        if event['httpMethod'] == 'OPTIONS':
+        if event["httpMethod"] == "OPTIONS":
             return {
-                'statusCode': 200,
-                'headers': {
+                "statusCode": 200,
+                "headers": {
                     "Access-Control-Allow-Origin": "http://localhost:8000",
-                    'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
-                }
+                    "Access-Control-Allow-Headers": "Content-Type, x-api-key",
+                },
             }
 
         # Parse the request body
-        body = json.loads(event['body'])
-        
+        body = json.loads(event["body"])
+
         vendor_id = str(uuid.uuid4())
 
         # Log generated vendor ID for tracking
@@ -41,19 +42,19 @@ def lambda_handler(event, context):
 
         # Prepare data for DynamoDB
         vendor_data = {
-            'vendor_id': vendor_id,
-            'vendor_name': body['vendor_name'],
-            'key_account': body['key_account'],
-            'region': body.get('region'),
-            'industry': body.get('industry'),
-            'contact_email': body.get('contact_email')
+            "vendor_id": vendor_id,
+            "vendor_name": body["vendor_name"],
+            "key_account": body["key_account"],
+            "region": body.get("region"),
+            "industry": body.get("industry"),
+            "contact_email": body.get("contact_email"),
         }
 
         incentive_data = {
-            'vendor_id': vendor_id,
-            'available_discount': body['available_discount'],
-            'discount_type': body.get('discount_type'),
-            'discount_expiry_date': body.get('discount_expiry_date')
+            "vendor_id": vendor_id,
+            "available_discount": body["available_discount"],
+            "discount_type": body.get("discount_type"),
+            "discount_expiry_date": body.get("discount_expiry_date"),
         }
 
         # Insert data into DynamoDB
@@ -68,11 +69,11 @@ def lambda_handler(event, context):
 
         # Return success response
         return {
-            'statusCode': 201,
-            'body': json.dumps({'vendor_id': vendor_id}),
-            'headers': {
+            "statusCode": 201,
+            "body": json.dumps({"vendor_id": vendor_id}),
+            "headers": {
                 "Access-Control-Allow-Origin": "http://localhost:8000",
-                "Access-Control-Allow-Headers": "Content-Type, x-api-key"
+                "Access-Control-Allow-Headers": "Content-Type, x-api-key",
             },
         }
 
@@ -81,8 +82,8 @@ def lambda_handler(event, context):
         logger.error(f"Missing field: {str(e)}", exc_info=True)
         metrics.add_metric(name="VendorIncentiveCreationFailed", unit="Count", value=1)
         return {
-            'statusCode': 400,
-            'body': json.dumps({'error': f"Missing required field: {str(e)}"}),
+            "statusCode": 400,
+            "body": json.dumps({"error": f"Missing required field: {str(e)}"}),
         }
 
     except Exception as e:
@@ -90,6 +91,6 @@ def lambda_handler(event, context):
         logger.error(f"Error: {str(e)}", exc_info=True)
         metrics.add_metric(name="VendorIncentiveCreationFailed", unit="Count", value=1)
         return {
-            'statusCode': 500,
-            'body': json.dumps({'error': 'Internal Server Error', 'message': str(e)}),
+            "statusCode": 500,
+            "body": json.dumps({"error": "Internal Server Error", "message": str(e)}),
         }
