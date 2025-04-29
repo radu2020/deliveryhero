@@ -5,7 +5,7 @@
 ![Project Screenshot](docs/images/diagram1.jpg)
 
 
-## Installing Prerequisites
+## Prerequisites
 
 ### AWS CLI
 
@@ -55,32 +55,26 @@ brew install python@3.13
     ```
     This allows to rapidly test changes without needing to redeploy the entire stack manually.
 
-## Checking Stack Status
+4. **(Optional) Checking Stack Status**:
+    You can check the AWS Console > CloudFormation to see the stack's status or use command below:
+    ```bash
+    aws cloudformation describe-stacks --stack-name <STACK_NAME>
+    ```
+5. **Invoking the SeedVendor Function**:
+    To invoke the SeedVendor Lambda please run the command below (output is logged to a file). This inserts dummy data into both Vendors and Incentives tables. 
+    ```bash
+    aws lambda invoke --function-name SeedVendorFunction output.txt
+    ```
 
-You can check the AWS Console > CloudFormation to see the stack's status or use command below:
-```bash
-aws cloudformation describe-stacks --stack-name <STACK_NAME>
-```
+6. **(Optional) Deleting the Stack via AWS CLI**
+    If no longer needed, the stack can be removed easily via the CLI:
+    ```bash
+    aws cloudformation delete-stack --stack-name <your-stack-name>
+    ```
 
-## Invoking the SeedVendor Function
+## API Endpoint Documentation
 
-To invoke the SeedVendor Lambda please run the command below (output is logged to a file). This inserts dummy data into both Vendors and Incentives tables. 
-
-```bash
-aws lambda invoke --function-name SeedVendorFunction output.txt
-```
-
-## Deleting the Stack via AWS CLI
-
-If no longer needed, the stack can be removed easily via the CLI:
-
-```bash
-aws cloudformation delete-stack --stack-name <your-stack-name>
-```
-
-# API Endpoint Documentation
-
-## Endpoint: `GET /vendor/{vendor_id}`
+### Endpoint: `GET /vendor/{vendor_id}`
 
 This endpoint retrieves the details of a specific vendor and its associated incentive data based on the provided `vendor_id`.
 
@@ -119,7 +113,7 @@ GET /vendor/12345
 }
 ```
 
-## Endpoint: `POST /vendor`
+### Endpoint: `POST /vendor`
 
 This endpoint allows users to create a new vendor and its associated incentive data.
 
@@ -169,7 +163,7 @@ This endpoint allows users to create a new vendor and its associated incentive d
 - `vendor_id`: The unique identifier for the newly created vendor. This ID is automatically generated and returned.
 
 
-# Manually Testing the API
+## Manually Testing the API
 
 1. **Create Vendor using cURL request:**
 
@@ -210,7 +204,7 @@ This endpoint allows users to create a new vendor and its associated incentive d
 
         ![UI Screenshot](docs/images/ui.jpg)
 
-# Running Tests Locally
+## Running Tests Locally
 
 1. Activate the virtual environment.
     ```bash
@@ -232,9 +226,9 @@ This endpoint allows users to create a new vendor and its associated incentive d
     deactivate
     ```
 
-# Why we use AWS Powertools ?
+## Why we use AWS Powertools ?
 
 This project uses AWS Powertools for Python which provides pre-built utilities like structured logging, tracing, and metrics that follow AWS best practices.
 Using Powertools helps you write cleaner, more reliable, and production-ready Lambda functions faster, while also making observability (logs, traces, metrics) much easier to implement and maintain.
 
-# Thank you for your time and attention!
+## Thank you for your time and attention!
