@@ -1,9 +1,12 @@
 # Vendor API
 
+### Vendor Data API on AWS
+
+Serverless application on AWS to manage vendor and incentive data which is a RESTful API that retrieves and creates vendor information and incentives using Lambda, API Gateway, and DynamoDB.
+
 ## Architecture
 
 ![Project Screenshot](docs/images/diagram1.jpg)
-
 
 ## Prerequisites
 
@@ -226,9 +229,10 @@ This endpoint allows users to create a new vendor and its associated incentive d
     deactivate
     ```
 
-## Why we use AWS Powertools ?
+## About AWS Powertools
 
 This project uses AWS Powertools for Python which provides pre-built utilities like structured logging, tracing, and metrics that follow AWS best practices.
+
 Using Powertools helps you write cleaner, more reliable, and production-ready Lambda functions faster, while also making observability (logs, traces, metrics) much easier to implement and maintain.
 
-## Thank you for your time and attention!
+## Thank you for your time and attention! 🫶
