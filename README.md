@@ -1,8 +1,14 @@
 # Vendor API
 
-### Vendor Data API on AWS
+### About
 
 Serverless application on AWS to manage vendor and incentive data which is a RESTful API that retrieves and creates vendor information and incentives using Lambda, API Gateway, and DynamoDB.
+
+### Preview
+
+This is a preview of the user interface which serves as a client for the Vendor API.
+
+![UI Screenshot](docs/images/ui.jpg)
 
 ## Architecture
 
