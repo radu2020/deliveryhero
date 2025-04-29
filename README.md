@@ -89,7 +89,7 @@ This endpoint retrieves the details of a specific vendor and its associated ince
 
 ---
 
-### **Request**
+**Request**
 
 **Method:** `GET`
 
@@ -103,7 +103,7 @@ GET /vendor/12345
 
 ---
 
-### **Response**
+**Response**
 
 #### Success (Status Code: `200 OK`)
 
@@ -128,7 +128,7 @@ This endpoint allows users to create a new vendor and its associated incentive d
 
 ---
 
-### **Request**
+**Request**
 
 **Method:** `POST`
 
@@ -158,7 +158,7 @@ This endpoint allows users to create a new vendor and its associated incentive d
 
 ---
 
-### **Response**
+**Response**
 
 #### Success (Status Code: `201 Created`)
 
@@ -213,7 +213,9 @@ This endpoint allows users to create a new vendor and its associated incentive d
 
         ![UI Screenshot](docs/images/ui.jpg)
 
-## Running Tests Locally
+## Development
+
+### Running Tests Locally
 
 1. Activate the virtual environment.
     ```bash
@@ -235,7 +237,22 @@ This endpoint allows users to create a new vendor and its associated incentive d
     deactivate
     ```
 
-## About AWS Powertools
+### Linting and Formatting with Pylint and Black
+This project uses Pylint and Black to ensure consistent code quality and style.
+
+Pylint is a static code analysis tool that checks for errors in Python code, enforces a coding standard, and helps find bugs. It provides detailed reports and suggestions for improvements. Example how to use command:
+
+```bash
+pylint src
+```
+
+Black is an automatic code formatter that enforces a consistent code style. It reformats code to adhere to PEP 8, making the code easier to read and maintain. Example how to use command:
+
+```bash
+black src
+```
+
+### About AWS Powertools
 
 This project uses AWS Powertools for Python which provides pre-built utilities like structured logging, tracing, and metrics that follow AWS best practices.
 
