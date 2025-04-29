@@ -4,6 +4,7 @@ from moto import mock_aws
 import boto3
 from decimal import Decimal
 from unittest.mock import MagicMock
+from get_vendor.app import lambda_handler as get_vendor_handler
 
 TABLE_VENDOR = "Vendors"
 TABLE_INCENTIVE = "Incentives"
@@ -48,10 +49,6 @@ def setup_dynamodb():
             "discount_type": "flat",
             "discount_expiry_date": "2025-12-31"
         })
-
-        # Import inside the mock context
-        global get_vendor_handler
-        from get_vendor.app import lambda_handler as get_vendor_handler
 
         yield
 
