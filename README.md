@@ -57,15 +57,15 @@ You can check the AWS Console > CloudFormation to see the stack's status or use 
 aws cloudformation describe-stacks --stack-name <STACK_NAME>
 ```
 
-## Invoking the Seeder Function
+## Invoking the SeedVendor Function
 
-To invoke the Seeder Lambda which inserts dummy data into both Vendors and Incentives tables please run the command below (output is logged to a file):
+To invoke the SeedVendor Lambda please run the command below (output is logged to a file). This inserts dummy data into both Vendors and Incentives tables. 
 
 ```bash
-aws lambda invoke --function-name VendorSeederFunction output.txt
+aws lambda invoke --function-name SeedVendorFunction output.txt
 ```
 
-## Deleting a Stack via AWS CLI
+## Deleting the Stack via AWS CLI
 
 If no longer needed, the stack can be removed easily via the CLI:
 
@@ -204,5 +204,10 @@ This endpoint allows users to create a new vendor and its associated incentive d
     Enter the **API Key**, **API URL**, and **Vendor ID**, then click **Get Vendor Data** to retrieve the vendor details (**Post Vendor Data** is also supported).
 
         ![UI Screenshot](docs/images/ui.jpg)
+# AWS Powertools
+
+Why Use AWS Powertools for Python in Lambda Projects?
+AWS Powertools for Python provides pre-built utilities like structured logging, tracing, and metrics that follow AWS best practices.
+Using Powertools helps you write cleaner, more reliable, and production-ready Lambda functions faster, while also making observability (logs, traces, metrics) much easier to implement and maintain.
 
 # Thank you for your time and attention!

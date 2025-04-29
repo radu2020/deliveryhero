@@ -109,11 +109,11 @@ Resources:
             Auth:
               ApiKeyRequired: false
 
-  SeederFunction:
+  SeedVendorFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: VendorSeederFunction
-      CodeUri: seeder/
+      FunctionName: SeedVendorFunction
+      CodeUri: seed_vendor/
       Handler: app.lambda_handler
       Runtime: python3.13
       Policies:
