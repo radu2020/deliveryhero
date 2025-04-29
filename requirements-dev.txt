@@ -1,0 +1,4 @@
+boto3
+aws-lambda-powertools[parser, validation, tracer]==2.6.0
+pytest
+moto

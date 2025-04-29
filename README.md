@@ -204,10 +204,32 @@ This endpoint allows users to create a new vendor and its associated incentive d
     Enter the **API Key**, **API URL**, and **Vendor ID**, then click **Get Vendor Data** to retrieve the vendor details (**Post Vendor Data** is also supported).
 
         ![UI Screenshot](docs/images/ui.jpg)
-# AWS Powertools
 
-Why Use AWS Powertools for Python in Lambda Projects?
-AWS Powertools for Python provides pre-built utilities like structured logging, tracing, and metrics that follow AWS best practices.
+# Running Tests Locally
+
+1. Activate the virtual environment.
+    ```bash
+    source .venv/bin/activate
+    ```
+
+2. Install dev dependencies.
+    ```bash
+    pip install -r requirements-dev.txt
+    ```
+
+3. Run Tests Verbose
+    ```bash
+    pytest -v
+    ```
+
+4. When done deactivate environment
+    ```bash
+    deactivate
+    ```
+
+# Why we use AWS Powertools ?
+
+This project uses AWS Powertools for Python which provides pre-built utilities like structured logging, tracing, and metrics that follow AWS best practices.
 Using Powertools helps you write cleaner, more reliable, and production-ready Lambda functions faster, while also making observability (logs, traces, metrics) much easier to implement and maintain.
 
 # Thank you for your time and attention!

@@ -57,7 +57,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: GetVendorFunction
-      CodeUri: get_vendor/
+      CodeUri: src/get_vendor/
       Handler: app.lambda_handler
       Policies:
         - DynamoDBReadPolicy:
@@ -85,7 +85,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: CreateVendorFunction
-      CodeUri: create_vendor/
+      CodeUri: src/create_vendor/
       Handler: app.lambda_handler
       Policies:
         - DynamoDBWritePolicy:
@@ -113,7 +113,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: SeedVendorFunction
-      CodeUri: seed_vendor/
+      CodeUri: src/seed_vendor/
       Handler: app.lambda_handler
       Runtime: python3.13
       Policies:

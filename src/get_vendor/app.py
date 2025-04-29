@@ -23,9 +23,8 @@ class DecimalEncoder(json.JSONEncoder):
 # Lambda handler with tracing and logging
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context  # Automatically adds Lambda context to logs
-def lambda_handler(event, context):
+def lambda_handler(event, context):    
     vendor_id = event['pathParameters']['vendor_id']
-
     logger.info(f"Fetching vendor and incentive data for vendor_id: {vendor_id}")
 
     # Check if the HTTP method is OPTIONS (preflight request)
@@ -42,7 +41,7 @@ def lambda_handler(event, context):
         # Get vendor and incentive from DynamoDB
         vendor = vendors_table.get_item(Key={'vendor_id': vendor_id}).get('Item')
         incentive = incentives_table.get_item(Key={'vendor_id': vendor_id}).get('Item')
-
+        
         # If vendor not found, return 404
         if not vendor:
             logger.error(f"Vendor with vendor_id {vendor_id} not found")
@@ -70,7 +69,7 @@ def lambda_handler(event, context):
             },
         }
 
-
+    
     except Exception as e:
         logger.error(f"Error occurred: {str(e)}", exc_info=True)
         metrics.add_metric(name="VendorFetchFailed", unit="Count", value=1)
