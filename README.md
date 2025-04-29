@@ -31,6 +31,11 @@ brew install python@3.13
 
 ## Deploying using SAM
 
+0. **Validate SAM Template**
+    ```bash
+    sam validate --lint
+    ```
+
 1. **Build**:
    ```bash
    sam build
